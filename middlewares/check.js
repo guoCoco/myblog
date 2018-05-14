@@ -1,4 +1,4 @@
-// 用于权限控制
+// 用于权限控制,主要功能就是做了重定向
 module.exports = {
   checkLogin: function checkLogin (req, res, next) {
     if (!req.session.user) {
