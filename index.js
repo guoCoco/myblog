@@ -1,8 +1,19 @@
 const express = require('express'); // 引入 express
 const app = express();
+const path = require('path');
 // 引入路由模块
 const indexRouter = require('./routes/index')
 const userRouter = require('./routes/users')
+
+// 引入设置模板引擎
+app.set('views', path.join(__dirname, 'views')) // 设置存放模板文件的目录
+app.set('view engine', 'ejs') // 设置模块引擎为 ejs, 注意这个 'view engine'不能写错
+
+
+
+
+
+
 
 // app.get('/', function(req, res) {
 // 	res.send('hello, express');
@@ -18,7 +29,7 @@ req.body: 解析后请求体，使用相关的模块，如body-parser, 请求体
 // 	res.send('hello,' + req.params.name)
 // })
 
-// 改造如下
+// 改造如下 // 注意 使用的app.use()的方法
 app.use('/', indexRouter)
 app.use('/users', userRouter)
 
