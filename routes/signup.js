@@ -1,4 +1,3 @@
-// 注册
 const fs = require('fs')
 const path = require('path')
 const sha1 = require('sha1')
@@ -10,13 +9,11 @@ const checkNotLogin  = require('../middlewares/check').checkNotLogin
 
 // POST /signin 创建一条留言
 router.get('/', checkNotLogin , function (req, res, next) {
-  // res.send('注册页')
   res.render('signup')
 })
 
 // POST /comments 创建一条留言
 router.post('/', checkNotLogin , function (req, res, next) {
-  // res.send('注册')
   const name = req.fields.name
   const gender = req.fields.gender
   const bio = req.fields.bio
@@ -44,7 +41,6 @@ router.post('/', checkNotLogin , function (req, res, next) {
     if (password !== repassword) {
       throw new Error('两次输入密码不一致')
     }
-
   } catch (e) {
     // 注册失败， 异步删除上传头像
     fs.unlink(req.files.avatar.path)
