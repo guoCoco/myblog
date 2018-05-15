@@ -6,6 +6,8 @@ const flash = require('connect-flash')
 const config = require('config-lite')(__dirname)
 const routes = require('./routes')
 const pkg = require('./package')
+const winston = require('winston')
+const expressWinston = require('express-winston')
 
 const app = express();
 
@@ -50,8 +52,35 @@ app.use(function (req, res, next) {
   res.locals.error = req.flash('error').toString()
   next()
 })
+
+// 正常请求日志
+app.use(expressWinston.logger({
+  transports: [
+    new (winston.transports.Console)({
+      json: true,
+      colorize: true
+    }),
+    new winston.transports.File({
+      filename: 'logs/success.log'
+    })
+  ]
+}))
+
 // 路由
 routes(app)
+
+// 错误请求的日志
+app.use(expressWinston.errorLogger({
+  transports: [
+    new (winston.transports.Console)({
+      json: true,
+      colorize: true
+    }),
+    new winston.transports.File({
+      filename: 'logs/error.log'
+    })
+  ]
+}))
 
  // 监听端口
 app.listen(config.port, function () {

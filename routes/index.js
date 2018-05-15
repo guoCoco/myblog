@@ -23,6 +23,6 @@ module.exports = function (app) {
   app.use(function(err, req, res, next) {
     console.log(err)
     req.flash('error', err.message)
-    res.redirect('/psots')
+    res.redirect('/posts')
   })
 }
